@@ -1,16 +1,16 @@
 {
-  "name": "Samuel Mshindi",
-  "role": "BI Developer",
+  "heroDescription": "I turn data into decisions — building dashboards, analytics, and web solutions that drive measurable business impact.",
+  "github": "https://github.com/Sam9239",
+  "phoneLink": "+254745933241",
+  "name": "Samuel Mshindi Nyongesa",
+  "phone": "+254 745 933 241",
   "initials": "SM",
+  "location": "Available Worldwide (Remote)",
+  "role": "BI Developer",
+  "availability": "Open for freelance & full-time",
+  "email": "mshindisamuel@gmail.com",
   "headline1": "Digital Transformation",
   "headline2": "& Business Intelligence",
-  "headline3": "Developer",
-  "heroDescription": "I turn data into decisions — building dashboards, analytics, and web solutions that drive measurable business impact.",
-  "email": "mshindisamuel@gmail.com",
-  "phone": "+254 745 933 241",
-  "phoneLink": "+254745933241",
-  "location": "Available Worldwide (Remote)",
-  "availability": "Open for freelance & full-time",
-  "github": "https://github.com/Sam9239",
-  "linkedin": "https://www.linkedin.com/in/samuel-mshindi/"
+  "linkedin": "https://www.linkedin.com/in/samuel-mshindi/",
+  "headline3": "Developer"
 }
