@@ -2,9 +2,9 @@ backend:
   name: github
   repo: Sam9239/Portfolio
   branch: main
-  # Replace with your deployed Cloudflare Worker URL (see
+  # Cloudflare Worker that brokers GitHub OAuth (see
   # admin/cloudflare-oauth-worker.js for setup). Required for GitHub login.
-  base_url: https://YOUR-WORKER.workers.dev
+  base_url: https://portfolio-cms.mshindisamuel.workers.dev
 
 # Where uploaded images go
 media_folder: "assets/uploads"
