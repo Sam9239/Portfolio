@@ -16,10 +16,9 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
         (function () {
-            try {
-                var t = localStorage.getItem('theme');
-                if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
-            } catch (e) {}
+            var t;
+            try { t = localStorage.getItem('theme'); } catch (e) {}
+            if (t !== 'dark') document.documentElement.setAttribute('data-theme', 'light');
         })();
     </script>
 </head>
@@ -95,38 +94,48 @@
                             <div class="contact-icon"><i data-lucide="mail"></i></div>
                             <div class="contact-text">
                                 <span class="contact-label">Email</span>
-                                <a href="mailto:mshindisamuel@gmail.com">mshindisamuel@gmail.com</a>
+                                <a href="mailto:mshindisamuel@gmail.com" data-bind="email" data-bind-href="mailto:email">mshindisamuel@gmail.com</a>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon"><i data-lucide="phone"></i></div>
+                            <div class="contact-text">
+                                <span class="contact-label">Phone</span>
+                                <a href="tel:+254745933241" data-bind="phone" data-bind-href="tel:phoneLink">+254 745 933 241</a>
                             </div>
                         </div>
                         <div class="contact-item">
                             <div class="contact-icon"><i data-lucide="map-pin"></i></div>
                             <div class="contact-text">
                                 <span class="contact-label">Location</span>
-                                <span>Available Worldwide (Remote)</span>
+                                <span data-bind="location">Available Worldwide (Remote)</span>
                             </div>
                         </div>
                         <div class="contact-item">
                             <div class="contact-icon"><i data-lucide="calendar"></i></div>
                             <div class="contact-text">
                                 <span class="contact-label">Availability</span>
-                                <span>Open for freelance &amp; full-time</span>
+                                <span data-bind="availability">Open for freelance &amp; full-time</span>
                             </div>
                         </div>
                     </div>
                     <div class="social-links">
-                        <a href="https://github.com/Sam9239" class="social-link" title="GitHub" target="_blank" rel="noopener noreferrer">
+                        <a href="https://github.com/Sam9239" class="social-link" title="GitHub" target="_blank" rel="noopener noreferrer" data-bind-href="github">
                             <i data-lucide="github"></i>
                         </a>
-                        <a href="https://www.linkedin.com/" class="social-link" title="LinkedIn" target="_blank" rel="noopener noreferrer">
+                        <a href="https://www.linkedin.com/in/samuel-mshindi/" class="social-link" title="LinkedIn" target="_blank" rel="noopener noreferrer" data-bind-href="linkedin">
                             <i data-lucide="linkedin"></i>
                         </a>
-                        <a href="mailto:mshindisamuel@gmail.com" class="social-link" title="Email">
+                        <a href="mailto:mshindisamuel@gmail.com" class="social-link" title="Email" data-bind-href="mailto:email">
                             <i data-lucide="mail"></i>
                         </a>
                     </div>
                 </div>
                 <div class="contact-form-wrapper">
-                    <form class="contact-form" id="contactForm">
+                    <!-- Formspree: replace YOUR_FORM_ID below with the ID from your
+                         Formspree form (https://formspree.io). Until you do, the form
+                         falls back to a friendly confirmation without sending. -->
+                    <form class="contact-form" id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" id="name" name="name" placeholder="John Doe" required>

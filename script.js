@@ -8,6 +8,55 @@ document.addEventListener('DOMContentLoaded', () => {
     lucide.createIcons();
 
     // ========================================
+    // LOAD EDITABLE SITE CONTENT (from CMS-managed JSON)
+    // Elements with data-bind="field" get their text from content/site.json.
+    // Elements with data-bind-href="field" (optionally "mailto:field" or
+    // "tel:field") get their href set. Falls back silently to the hardcoded
+    // HTML if the file can't be loaded (e.g. opened via file://).
+    // ========================================
+    (function loadSiteContent() {
+        // Resolve content path relative to this page so it works both at the
+        // repo root locally and under /Portfolio/ on GitHub Pages.
+        const contentUrl = new URL('content/site.json', window.location.href).href;
+
+        fetch(contentUrl)
+            .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+            .then((data) => {
+                // Text bindings
+                document.querySelectorAll('[data-bind]').forEach((el) => {
+                    const key = el.getAttribute('data-bind');
+                    if (data[key] != null && data[key] !== '') el.textContent = data[key];
+                });
+
+                // Href bindings (supports "mailto:" / "tel:" prefixes)
+                document.querySelectorAll('[data-bind-href]').forEach((el) => {
+                    const raw = el.getAttribute('data-bind-href');
+                    let prefix = '';
+                    let key = raw;
+                    const m = raw.match(/^(mailto:|tel:)(.+)$/);
+                    if (m) { prefix = m[1]; key = m[2]; }
+                    if (data[key] != null && data[key] !== '') {
+                        el.setAttribute('href', prefix + data[key]);
+                    }
+                });
+
+                // Logo initials (all .logo-mark spans)
+                if (data.initials) {
+                    document.querySelectorAll('.logo-mark > span').forEach((s) => {
+                        s.textContent = data.initials;
+                    });
+                }
+                if (data.name) {
+                    document.querySelectorAll('.logo-name').forEach((s) => { s.textContent = data.name; });
+                }
+                if (data.role) {
+                    document.querySelectorAll('.logo-role').forEach((s) => { s.textContent = data.role; });
+                }
+            })
+            .catch(() => { /* keep hardcoded fallback content */ });
+    })();
+
+    // ========================================
     // THEME TOGGLE (dark / light)
     // The saved theme is applied pre-paint via an inline script in <head>.
     // Here we just wire the button and persist the choice.
@@ -257,31 +306,53 @@ document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.getElementById('contactForm');
 
     if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
+        contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            // Get form data
-            const formData = new FormData(contactForm);
-            const data = Object.fromEntries(formData);
-
-            // Show success message (replace with actual form handling)
             const btn = contactForm.querySelector('button[type="submit"]');
             const originalText = btn.innerHTML;
+            const action = contactForm.getAttribute('action') || '';
+            const formspreeReady = action.includes('formspree.io') && !action.includes('YOUR_FORM_ID');
 
-            btn.innerHTML = '<span>Message Sent!</span>';
-            btn.style.background = 'var(--color-accent)';
-
-            setTimeout(() => {
+            const setBtn = (text, bg) => {
+                btn.innerHTML = `<span>${text}</span>`;
+                btn.style.background = bg || '';
+            };
+            const resetBtn = (delay) => setTimeout(() => {
                 btn.innerHTML = originalText;
                 btn.style.background = '';
-                contactForm.reset();
-            }, 3000);
+            }, delay);
 
-            // NOTE: To make this functional, integrate with:
-            // - Formspree: action="https://formspree.io/f/YOUR_FORM_ID"
-            // - Netlify Forms: add netlify attribute to form
-            // - EmailJS: Use their SDK
-            console.log('Form submitted:', data);
+            // If Formspree isn't configured yet, just show a friendly confirmation.
+            if (!formspreeReady) {
+                setBtn('Message Sent!', 'var(--color-accent)');
+                setTimeout(() => { resetBtn(0); contactForm.reset(); }, 3000);
+                console.log('Form submitted (Formspree not configured):', Object.fromEntries(new FormData(contactForm)));
+                return;
+            }
+
+            // Real submission via Formspree's AJAX endpoint.
+            setBtn('Sending...', '');
+            btn.disabled = true;
+            try {
+                const res = await fetch(action, {
+                    method: 'POST',
+                    body: new FormData(contactForm),
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (res.ok) {
+                    setBtn('Message Sent!', 'var(--color-accent)');
+                    contactForm.reset();
+                } else {
+                    setBtn('Something went wrong', 'var(--color-accent-secondary)');
+                }
+            } catch (err) {
+                setBtn('Network error — try again', 'var(--color-accent-secondary)');
+                console.error('Form error:', err);
+            } finally {
+                btn.disabled = false;
+                resetBtn(3500);
+            }
         });
     }
 

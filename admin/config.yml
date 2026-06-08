@@ -1,0 +1,71 @@
+backend:
+  name: github
+  repo: Sam9239/Portfolio
+  branch: main
+
+# Where uploaded images go
+media_folder: "assets/uploads"
+public_folder: "assets/uploads"
+
+# Friendly editor UI label
+site_url: https://sam9239.github.io/Portfolio/
+display_url: https://sam9239.github.io/Portfolio/
+
+collections:
+  # ---- Site-wide details (single file) ----
+  - name: "settings"
+    label: "Site Details"
+    files:
+      - name: "site"
+        label: "Profile & Contact"
+        file: "content/site.json"
+        fields:
+          - { label: "Full Name", name: "name", widget: "string" }
+          - { label: "Role / Title", name: "role", widget: "string" }
+          - { label: "Logo Initials", name: "initials", widget: "string", default: "SM" }
+          - { label: "Hero Headline (line 1)", name: "headline1", widget: "string" }
+          - { label: "Hero Headline (highlighted line)", name: "headline2", widget: "string" }
+          - { label: "Hero Headline (line 3)", name: "headline3", widget: "string" }
+          - { label: "Hero Description", name: "heroDescription", widget: "text" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Phone (display)", name: "phone", widget: "string", required: false }
+          - { label: "Phone (link, e.g. +254745933241)", name: "phoneLink", widget: "string", required: false }
+          - { label: "Location", name: "location", widget: "string", required: false }
+          - { label: "Availability", name: "availability", widget: "string", required: false }
+          - { label: "GitHub URL", name: "github", widget: "string", required: false }
+          - { label: "LinkedIn URL", name: "linkedin", widget: "string", required: false }
+
+  # ---- About page text ----
+  - name: "about"
+    label: "About Page"
+    files:
+      - name: "about"
+        label: "About Content"
+        file: "content/about.json"
+        fields:
+          - { label: "Lead paragraph", name: "lead", widget: "text" }
+          - { label: "Paragraph 2", name: "p2", widget: "text" }
+          - { label: "Paragraph 3", name: "p3", widget: "text" }
+          - label: "Trait tags"
+            name: "tags"
+            widget: "list"
+            field: { label: "Tag", name: "tag", widget: "string" }
+
+  # ---- Projects (each is editable) ----
+  - name: "projects"
+    label: "Projects"
+    folder: "content/projects"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Image", name: "image", widget: "image", required: false }
+      - label: "Tech tags"
+        name: "tags"
+        widget: "list"
+        field: { label: "Tag", name: "tag", widget: "string" }
+      - { label: "Live URL", name: "liveUrl", widget: "string", required: false }
+      - { label: "Code URL", name: "codeUrl", widget: "string", required: false }
+      - { label: "Order", name: "order", widget: "number", default: 1, value_type: "int" }

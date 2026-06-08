@@ -16,13 +16,12 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
         // Apply saved theme before paint to avoid a flash of the wrong theme.
-        // Default is dark (no attribute). Change the fallback to 'light' to
-        // make light the default.
+        // Default is LIGHT. Users who pick dark have 'dark' saved and opt out.
         (function () {
-            try {
-                var t = localStorage.getItem('theme');
-                if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
-            } catch (e) {}
+            var t;
+            try { t = localStorage.getItem('theme'); } catch (e) {}
+            // Light is default: only stay dark if explicitly chosen.
+            if (t !== 'dark') document.documentElement.setAttribute('data-theme', 'light');
         })();
     </script>
 </head>
