@@ -8,6 +8,26 @@ document.addEventListener('DOMContentLoaded', () => {
     lucide.createIcons();
 
     // ========================================
+    // THEME TOGGLE (dark / light)
+    // The saved theme is applied pre-paint via an inline script in <head>.
+    // Here we just wire the button and persist the choice.
+    // ========================================
+    const themeToggle = document.getElementById('themeToggle');
+
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+            if (isLight) {
+                document.documentElement.removeAttribute('data-theme');
+                try { localStorage.setItem('theme', 'dark'); } catch (e) {}
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                try { localStorage.setItem('theme', 'light'); } catch (e) {}
+            }
+        });
+    }
+
+    // ========================================
     // CUSTOM CURSOR
     // ========================================
     const cursor = document.querySelector('.cursor');

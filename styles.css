@@ -21,6 +21,13 @@
     --color-border: rgba(255, 255, 255, 0.08);
     --color-border-hover: rgba(255, 255, 255, 0.15);
 
+    /* Theme-dependent surfaces (overridden in light mode) */
+    --color-nav-bg: rgba(10, 10, 15, 0.85);
+    --color-overlay: rgba(10, 10, 15, 0.8);
+    --color-overlay-grad: linear-gradient(180deg, rgba(10, 10, 15, 0.35), rgba(10, 10, 15, 0.85));
+    --color-card-shadow: rgba(0, 0, 0, 0.3);
+    --orb-opacity: 0.4;
+
     /* Gradients */
     --gradient-primary: linear-gradient(135deg, var(--color-primary), var(--color-accent));
     --gradient-hero: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(34, 211, 238, 0.1));
@@ -44,6 +51,46 @@
     --radius-md: 12px;
     --radius-lg: 16px;
     --radius-xl: 24px;
+}
+
+/* ========================================
+   LIGHT THEME  (toggle adds data-theme="light")
+   ======================================== */
+[data-theme="light"] {
+    --color-bg: #f7f8fc;
+    --color-bg-secondary: #eef1f8;
+    --color-bg-card: #ffffff;
+    --color-bg-hover: #eaedf6;
+    --color-text: #1a1d29;
+    --color-text-secondary: #4b5366;
+    --color-text-muted: #7b8398;
+    --color-primary: #5b5ef0;
+    --color-primary-light: #7c7ef5;
+    --color-primary-dark: #4a3fd8;
+    --color-accent: #0ea5c4;
+    --color-accent-secondary: #db2f87;
+    --color-border: rgba(20, 24, 40, 0.10);
+    --color-border-hover: rgba(20, 24, 40, 0.20);
+
+    --gradient-hero: linear-gradient(135deg, rgba(91, 94, 240, 0.12), rgba(14, 165, 196, 0.10));
+
+    --color-nav-bg: rgba(247, 248, 252, 0.85);
+    --color-overlay: rgba(20, 24, 40, 0.72);
+    --color-overlay-grad: linear-gradient(180deg, rgba(20, 24, 40, 0.25), rgba(20, 24, 40, 0.78));
+    --color-card-shadow: rgba(20, 24, 40, 0.12);
+    --orb-opacity: 0.22;
+}
+
+/* Smooth transition when switching themes */
+body,
+.navbar.scrolled,
+.project-card,
+.skill-category,
+.highlight-card,
+.timeline-content,
+.contact-form-wrapper,
+.contact-item {
+    transition: background-color var(--transition-base), border-color var(--transition-base), color var(--transition-base);
 }
 
 /* Reset & Base */
@@ -142,7 +189,7 @@ body:hover .cursor-follower {
 }
 
 .navbar.scrolled {
-    background: rgba(10, 10, 15, 0.85);
+    background: var(--color-nav-bg);
     backdrop-filter: blur(20px);
     padding: 16px 0;
     border-bottom: 1px solid var(--color-border);
@@ -301,7 +348,7 @@ body:hover .cursor-follower {
     position: absolute;
     border-radius: 50%;
     filter: blur(80px);
-    opacity: 0.4;
+    opacity: var(--orb-opacity);
     animation: float 20s ease-in-out infinite;
 }
 
@@ -747,7 +794,7 @@ section {
 .project-card:hover {
     transform: translateY(-8px);
     border-color: var(--color-border-hover);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 20px 40px var(--color-card-shadow);
 }
 
 .project-image {
@@ -776,7 +823,7 @@ section {
 .project-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(10, 10, 15, 0.8);
+    background: var(--color-overlay);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1456,7 +1503,7 @@ section {
 
 /* Make the overlay read better over a real photo */
 .project-overlay {
-    background: linear-gradient(180deg, rgba(10,10,15,0.35), rgba(10,10,15,0.85));
+    background: var(--color-overlay-grad);
     flex-direction: column;
     gap: 14px;
 }
@@ -1575,4 +1622,43 @@ section {
 /* Hide the SM name/role text on very small screens, keep the mark */
 @media (max-width: 480px) {
     .logo-meta { display: none; }
+}
+
+/* ---- Theme toggle button ---- */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.theme-toggle {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast), transform var(--transition-fast);
+}
+
+.theme-toggle:hover {
+    color: var(--color-text);
+    border-color: var(--color-border-hover);
+    transform: translateY(-2px);
+}
+
+.theme-toggle i { width: 18px; height: 18px; }
+
+/* Show the right icon for the current theme */
+.theme-toggle .icon-moon { display: none; }
+.theme-toggle .icon-sun  { display: block; }
+[data-theme="light"] .theme-toggle .icon-moon { display: block; }
+[data-theme="light"] .theme-toggle .icon-sun  { display: none; }
+
+/* Keep mobile toggle (hamburger) and theme button aligned on small screens */
+@media (max-width: 768px) {
+    .nav-actions { gap: 12px; }
 }
