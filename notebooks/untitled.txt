@@ -1,5 +1,0 @@
-PGUSER=postgres
-PGPASSWORD=SamMsh!@25
-PGHOST=localhost
-PGPORT=5432
-PGDATABASE=analytics_db
