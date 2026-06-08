@@ -18,11 +18,29 @@ A stunning, fully customizable personal portfolio built with HTML, CSS, and vani
 
 ```
 portfolio/
-├── index.html      # Main HTML file
-├── styles.css      # All styling (easily customizable)
-├── script.js       # All JavaScript functionality
+├── index.html      # Home (hero, intro, services, CTA)
+├── about.html      # About + Experience timeline
+├── work.html       # Skills + Featured projects
+├── contact.html    # Contact details + form
+├── styles.css      # All styling (shared across pages)
+├── script.js       # All JavaScript (shared, page-aware)
+├── assets/         # Images (profile + project thumbnails)
+│   ├── profile.webp
+│   └── project-*.webp
+├── preview.png     # Social/OG share image
 └── README.md       # This file
 ```
+
+> **Multi-page site.** Navigation links point to real pages, so each is
+> bookmarkable and SEO-friendly. The nav, footer, and logo are duplicated
+> in each HTML file — when you change one (e.g. add a nav item), update all
+> four pages to keep them in sync.
+
+### Replacing the placeholder images
+
+The images in `assets/` are AI-generated placeholders. Swap them with your
+own by replacing the files (keep the same filenames), or update the `src`
+paths in `index.html`, `about.html`, and `work.html`.
 
 ## 🎨 Customization Guide
 

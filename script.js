@@ -115,10 +115,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const stats = document.querySelectorAll('.stat-number');
     let statsAnimated = false;
 
-    function animateCounters() {
-        if (statsAnimated) return;
+    const heroSection = document.querySelector('.hero');
 
-        const heroSection = document.querySelector('.hero');
+    function animateCounters() {
+        if (statsAnimated || !heroSection || stats.length === 0) return;
+
         const heroBottom = heroSection.getBoundingClientRect().bottom;
 
         if (heroBottom > window.innerHeight / 2) {
@@ -159,10 +160,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const skillBars = document.querySelectorAll('.skill-progress');
     let skillsAnimated = false;
 
-    function animateSkillBars() {
-        if (skillsAnimated) return;
+    const skillsSection = document.querySelector('.skills');
 
-        const skillsSection = document.querySelector('.skills');
+    function animateSkillBars() {
+        if (skillsAnimated || !skillsSection || skillBars.length === 0) return;
+
         const sectionTop = skillsSection.getBoundingClientRect().top;
 
         if (sectionTop < window.innerHeight * 0.8) {
@@ -265,29 +267,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ========================================
     // ACTIVE NAV LINK HIGHLIGHTING
+    // The current page is marked with .current in each page's HTML,
+    // so no scroll-based highlighting is needed in the multi-page setup.
     // ========================================
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-link');
-
-    window.addEventListener('scroll', () => {
-        let current = '';
-
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop - 100;
-            const sectionHeight = section.offsetHeight;
-
-            if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
-                current = section.getAttribute('id');
-            }
-        });
-
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === `#${current}`) {
-                link.classList.add('active');
-            }
-        });
-    });
 
     // ========================================
     // TYPING EFFECT FOR HERO (Optional)

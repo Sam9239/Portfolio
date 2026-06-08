@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Samuel Mshindi</title>
+    <meta name="description" content="Get in touch with Samuel Mshindi — Digital Transformation & Business Intelligence Developer.">
+    <meta property="og:title" content="Contact | Samuel Mshindi">
+    <meta property="og:description" content="Get in touch with Samuel Mshindi for projects and collaborations.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="preview.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-mark"><span>SM</span></span>
+                <span class="logo-meta">
+                    <span class="logo-name">Samuel Mshindi</span>
+                    <span class="logo-role">BI Developer</span>
+                </span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="work.html" class="nav-link">Work</a>
+                <a href="contact.html" class="nav-link current">Contact</a>
+            </div>
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <div class="mobile-menu-content">
+            <a href="index.html" class="mobile-link">Home</a>
+            <a href="about.html" class="mobile-link">About</a>
+            <a href="work.html" class="mobile-link">Work</a>
+            <a href="contact.html" class="mobile-link">Contact</a>
+        </div>
+    </div>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="hero-bg">
+            <div class="gradient-orb orb-2"></div>
+            <div class="gradient-orb orb-3"></div>
+        </div>
+        <div class="container">
+            <span class="section-tag">Contact</span>
+            <h1 class="page-title">Let's Work <span class="highlight">Together</span></h1>
+            <p class="page-subtitle">
+                Have a project in mind or just want to chat? I'm always open to discussing
+                new opportunities.
+            </p>
+        </div>
+    </header>
+
+    <!-- Contact -->
+    <section class="contact section" id="contact">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <p class="contact-lead">
+                        Whether it's a dashboard, a data pipeline, or a full web build —
+                        tell me what you're working on and let's make it happen.
+                    </p>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon"><i data-lucide="mail"></i></div>
+                            <div class="contact-text">
+                                <span class="contact-label">Email</span>
+                                <a href="mailto:mshindisamuel@gmail.com">mshindisamuel@gmail.com</a>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon"><i data-lucide="map-pin"></i></div>
+                            <div class="contact-text">
+                                <span class="contact-label">Location</span>
+                                <span>Available Worldwide (Remote)</span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon"><i data-lucide="calendar"></i></div>
+                            <div class="contact-text">
+                                <span class="contact-label">Availability</span>
+                                <span>Open for freelance &amp; full-time</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://github.com/Sam9239" class="social-link" title="GitHub" target="_blank" rel="noopener noreferrer">
+                            <i data-lucide="github"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/" class="social-link" title="LinkedIn" target="_blank" rel="noopener noreferrer">
+                            <i data-lucide="linkedin"></i>
+                        </a>
+                        <a href="mailto:mshindisamuel@gmail.com" class="social-link" title="Email">
+                            <i data-lucide="mail"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="contact-form-wrapper">
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" placeholder="John Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" placeholder="Project Inquiry">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" placeholder="Tell me about your project..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">
+                            <span>Send Message</span>
+                            <i data-lucide="send"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-mark"><span>SM</span></span>
+                    <p>Turning data into decisions.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="about.html">About</a>
+                    <a href="work.html">Work</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Samuel Mshindi. Crafted with passion.</p>
+                <button class="back-to-top" id="backToTop" aria-label="Back to top">
+                    <i data-lucide="arrow-up"></i>
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
