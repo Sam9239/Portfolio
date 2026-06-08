@@ -1,0 +1,32 @@
+{
+  "items": [
+    {
+      "date": "2023 — Present",
+      "title": "Senior Frontend Developer",
+      "company": "Tech Company Name",
+      "description": "Leading frontend architecture decisions, mentoring junior developers, and delivering high-impact features for enterprise clients.",
+      "tags": ["React", "TypeScript", "Micro-frontends"]
+    },
+    {
+      "date": "2021 — 2023",
+      "title": "Full Stack Developer",
+      "company": "Startup Name",
+      "description": "Built and scaled web applications from scratch, implemented CI/CD pipelines, and optimized performance for 100k+ users.",
+      "tags": ["Next.js", "Node.js", "AWS"]
+    },
+    {
+      "date": "2019 — 2021",
+      "title": "Junior Web Developer",
+      "company": "Digital Agency",
+      "description": "Developed responsive websites for diverse clients, collaborated with designers, and maintained legacy codebases.",
+      "tags": ["JavaScript", "WordPress", "Sass"]
+    },
+    {
+      "date": "2015 — 2019",
+      "title": "Computer Science Degree",
+      "company": "University Name",
+      "description": "Bachelor's degree with focus on software engineering, algorithms, and human-computer interaction.",
+      "tags": ["Dean's List", "Research", "Hackathons"]
+    }
+  ]
+}

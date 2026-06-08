@@ -1,0 +1,9 @@
+{
+  "title": "Creative Agency Website",
+  "description": "Immersive agency site with smooth animations, WebGL effects, and seamless page transitions.",
+  "image": "assets/project-agency.webp",
+  "tags": ["Figma", "React", "GSAP"],
+  "liveUrl": "",
+  "codeUrl": "",
+  "order": 4
+}

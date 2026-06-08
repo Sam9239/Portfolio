@@ -10,7 +10,6 @@ backend:
 media_folder: "assets/uploads"
 public_folder: "assets/uploads"
 
-# Friendly editor UI label
 site_url: https://sam9239.github.io/Portfolio/
 display_url: https://sam9239.github.io/Portfolio/
 
@@ -38,7 +37,34 @@ collections:
           - { label: "GitHub URL", name: "github", widget: "string", required: false }
           - { label: "LinkedIn URL", name: "linkedin", widget: "string", required: false }
 
-  # ---- About page text ----
+  # ---- Home page ----
+  - name: "home"
+    label: "Home Page"
+    files:
+      - name: "home"
+        label: "Home Content"
+        file: "content/home.json"
+        fields:
+          - label: "Hero Stats"
+            name: "stats"
+            widget: "list"
+            fields:
+              - { label: "Number", name: "number", widget: "number", value_type: "int" }
+              - { label: "Label", name: "label", widget: "string" }
+          - { label: "Intro Heading", name: "introHeading", widget: "string" }
+          - { label: "Intro Paragraph 1", name: "introP1", widget: "text" }
+          - { label: "Intro Paragraph 2", name: "introP2", widget: "text" }
+          - label: "Services / Focus Areas"
+            name: "services"
+            widget: "list"
+            fields:
+              - { label: "Icon (lucide name)", name: "icon", widget: "string", hint: "e.g. bar-chart-3, database, code-2 — see lucide.dev" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+          - { label: "CTA Heading", name: "ctaHeading", widget: "string" }
+          - { label: "CTA Text", name: "ctaText", widget: "text" }
+
+  # ---- About page ----
   - name: "about"
     label: "About Page"
     files:
@@ -54,17 +80,60 @@ collections:
             widget: "list"
             field: { label: "Tag", name: "tag", widget: "string" }
 
-  # ---- Projects (each is editable) ----
+  # ---- Experience timeline ----
+  - name: "experience"
+    label: "Experience"
+    files:
+      - name: "experience"
+        label: "Experience & Education"
+        file: "content/experience.json"
+        fields:
+          - label: "Timeline Items"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "Date Range", name: "date", widget: "string", hint: "e.g. 2023 — Present" }
+              - { label: "Title / Role", name: "title", widget: "string" }
+              - { label: "Company / School", name: "company", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+              - label: "Tags"
+                name: "tags"
+                widget: "list"
+                field: { label: "Tag", name: "tag", widget: "string" }
+
+  # ---- Skills ----
+  - name: "skills"
+    label: "Skills"
+    files:
+      - name: "skills"
+        label: "Skills & Technologies"
+        file: "content/skills.json"
+        fields:
+          - label: "Categories"
+            name: "categories"
+            widget: "list"
+            fields:
+              - { label: "Category Name", name: "name", widget: "string" }
+              - { label: "Icon (lucide name)", name: "icon", widget: "string", hint: "e.g. code-2, database, server, wrench" }
+              - label: "Skills"
+                name: "skills"
+                widget: "list"
+                fields:
+                  - { label: "Skill Name", name: "name", widget: "string" }
+                  - { label: "Level (0-100)", name: "level", widget: "number", value_type: "int", min: 0, max: 100 }
+
+  # ---- Projects (each is editable, add/remove freely) ----
   - name: "projects"
     label: "Projects"
     folder: "content/projects"
     create: true
     slug: "{{slug}}"
-    summary: "{{title}}"
+    summary: "{{order}} — {{title}}"
+    sortable_fields: ["order", "title"]
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Description", name: "description", widget: "text" }
-      - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Image", name: "image", widget: "image", required: false, hint: "Upload or pick an image" }
       - label: "Tech tags"
         name: "tags"
         widget: "list"

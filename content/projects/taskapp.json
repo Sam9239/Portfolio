@@ -1,0 +1,9 @@
+{
+  "title": "Task Management App",
+  "description": "Collaborative task manager with real-time updates, drag-and-drop interface, and team analytics.",
+  "image": "assets/project-taskapp.webp",
+  "tags": ["Next.js", "TypeScript", "Tailwind"],
+  "liveUrl": "",
+  "codeUrl": "",
+  "order": 2
+}

@@ -52,8 +52,198 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (data.role) {
                     document.querySelectorAll('.logo-role').forEach((s) => { s.textContent = data.role; });
                 }
+
+                // Hero headline + description (home page)
+                const setText = (sel, val) => {
+                    const el = document.querySelector(sel);
+                    if (el && val != null && val !== '') el.textContent = val;
+                };
+                setText('.hero-title .title-line:nth-child(1)', data.headline1);
+                setText('.hero-title .title-line.highlight', data.headline2);
+                setText('.hero-title .title-line:nth-child(3)', data.headline3);
+                setText('.hero-description', data.heroDescription);
+                // Hero label uses the name
+                setText('.hero-label .label-text', data.name);
             })
             .catch(() => { /* keep hardcoded fallback content */ });
+    })();
+
+    // ========================================
+    // DYNAMIC CONTENT RENDERERS (CMS-managed JSON)
+    // Each renderer targets a container by id; if the container isn't on the
+    // current page, it does nothing. All fall back to the hardcoded HTML if
+    // the JSON can't be loaded.
+    // ========================================
+    const esc = (s) => String(s == null ? '' : s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+
+    const loadJSON = (path) =>
+        fetch(new URL(path, window.location.href).href)
+            .then((r) => (r.ok ? r.json() : Promise.reject(r.status)));
+
+    const refreshIcons = () => { try { lucide.createIcons(); } catch (e) {} };
+
+    // ---- HOME: stats, intro, services, CTA ----
+    (function renderHome() {
+        if (!document.querySelector('.hero-stats')) return; // home only
+        loadJSON('content/home.json').then((d) => {
+            // Stats
+            const statsWrap = document.querySelector('.hero-stats');
+            if (statsWrap && Array.isArray(d.stats) && d.stats.length) {
+                statsWrap.innerHTML = d.stats.map((s) => `
+                    <div class="stat">
+                        <span class="stat-number" data-target="${esc(s.number)}">0</span>
+                        <span class="stat-label">${esc(s.label)}</span>
+                    </div>`).join('');
+            }
+            // Intro
+            const ih = document.querySelector('[data-home="introHeading"]');
+            if (ih && d.introHeading) ih.textContent = d.introHeading;
+            const ip1 = document.querySelector('[data-home="introP1"]');
+            if (ip1 && d.introP1) ip1.textContent = d.introP1;
+            const ip2 = document.querySelector('[data-home="introP2"]');
+            if (ip2 && d.introP2) ip2.textContent = d.introP2;
+            // Services
+            const svc = document.getElementById('servicesGrid');
+            if (svc && Array.isArray(d.services) && d.services.length) {
+                svc.innerHTML = d.services.map((s) => `
+                    <div class="highlight-card">
+                        <div class="hc-icon"><i data-lucide="${esc(s.icon || 'star')}"></i></div>
+                        <h3>${esc(s.title)}</h3>
+                        <p>${esc(s.description)}</p>
+                    </div>`).join('');
+            }
+            // CTA
+            const ch = document.querySelector('[data-home="ctaHeading"]');
+            if (ch && d.ctaHeading) ch.textContent = d.ctaHeading;
+            const ct = document.querySelector('[data-home="ctaText"]');
+            if (ct && d.ctaText) ct.textContent = d.ctaText;
+
+            refreshIcons();
+        }).catch(() => {});
+    })();
+
+    // ---- ABOUT: paragraphs + trait tags ----
+    (function renderAbout() {
+        const lead = document.querySelector('[data-about="lead"]');
+        if (!lead) return; // about page only
+        loadJSON('content/about.json').then((d) => {
+            const set = (sel, val) => {
+                const el = document.querySelector(sel);
+                if (el && val) el.textContent = val;
+            };
+            set('[data-about="lead"]', d.lead);
+            set('[data-about="p2"]', d.p2);
+            set('[data-about="p3"]', d.p3);
+            const tagWrap = document.querySelector('[data-about="tags"]');
+            if (tagWrap && Array.isArray(d.tags) && d.tags.length) {
+                tagWrap.innerHTML = d.tags.map((t) => `<span class="tag">${esc(t)}</span>`).join('');
+            }
+        }).catch(() => {});
+    })();
+
+    // ---- EXPERIENCE timeline ----
+    (function renderExperience() {
+        const wrap = document.getElementById('timeline');
+        if (!wrap) return;
+        loadJSON('content/experience.json').then((d) => {
+            if (!Array.isArray(d.items) || !d.items.length) return;
+            wrap.innerHTML = d.items.map((it) => `
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">${esc(it.date)}</span>
+                        <h3 class="timeline-title">${esc(it.title)}</h3>
+                        <span class="timeline-company">${esc(it.company)}</span>
+                        <p class="timeline-description">${esc(it.description)}</p>
+                        <div class="timeline-tags">
+                            ${(it.tags || []).map((t) => `<span>${esc(t)}</span>`).join('')}
+                        </div>
+                    </div>
+                </div>`).join('');
+            // Re-observe new timeline items for the reveal animation
+            reobserveReveal(wrap.querySelectorAll('.timeline-item'));
+        }).catch(() => {});
+    })();
+
+    // ---- SKILLS ----
+    (function renderSkills() {
+        const wrap = document.getElementById('skillsGrid');
+        if (!wrap) return;
+        loadJSON('content/skills.json').then((d) => {
+            if (!Array.isArray(d.categories) || !d.categories.length) return;
+            wrap.innerHTML = d.categories.map((cat) => `
+                <div class="skill-category">
+                    <div class="skill-header">
+                        <i data-lucide="${esc(cat.icon || 'star')}"></i>
+                        <h3>${esc(cat.name)}</h3>
+                    </div>
+                    <div class="skill-items">
+                        ${(cat.skills || []).map((s) => `
+                            <div class="skill-item">
+                                <span class="skill-name">${esc(s.name)}</span>
+                                <div class="skill-bar">
+                                    <div class="skill-progress" data-width="${esc(s.level)}"></div>
+                                </div>
+                            </div>`).join('')}
+                    </div>
+                </div>`).join('');
+            refreshIcons();
+            reobserveReveal(wrap.querySelectorAll('.skill-category'));
+            // Let the skill-bar animation pick up the new bars
+            rebindSkillBars();
+        }).catch(() => {});
+    })();
+
+    // ---- PROJECTS (fully dynamic) ----
+    (function renderProjects() {
+        const wrap = document.getElementById('projectsGrid');
+        if (!wrap) return;
+        // List project files via the public GitHub API so newly-added
+        // projects (with random slugs from the CMS) appear automatically.
+        const api = 'https://api.github.com/repos/Sam9239/Portfolio/contents/content/projects?ref=main';
+        fetch(api, { headers: { 'Accept': 'application/vnd.github+json' } })
+            .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+            .then((entries) => {
+                const files = (entries || [])
+                    .filter((e) => e.type === 'file' && e.name.endsWith('.json'))
+                    .map((e) => e.name);
+                return Promise.all(files.map((f) =>
+                    loadJSON('content/projects/' + f).catch(() => null)
+                ));
+            }).then((projects) => {
+            const list = (projects || []).filter(Boolean)
+                .sort((a, b) => (a.order || 0) - (b.order || 0));
+            if (!list.length) return; // keep hardcoded fallback
+            wrap.innerHTML = list.map((p) => {
+                const links = [];
+                if (p.liveUrl) links.push(`<a href="${esc(p.liveUrl)}" class="project-link" title="View Live" target="_blank" rel="noopener noreferrer"><i data-lucide="external-link"></i></a>`);
+                if (p.codeUrl) links.push(`<a href="${esc(p.codeUrl)}" class="project-link" title="View Code" target="_blank" rel="noopener noreferrer"><i data-lucide="github"></i></a>`);
+                const overlay = links.length
+                    ? `<div class="project-overlay"><div class="project-links">${links.join('')}</div></div>` : '';
+                const img = p.image
+                    ? `<img class="project-thumb" src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy">`
+                    : `<div class="project-placeholder"><i data-lucide="image"></i><span>No image</span></div>`;
+                return `
+                    <div class="project-card">
+                        <div class="project-image">
+                            ${img}
+                            ${overlay}
+                        </div>
+                        <div class="project-info">
+                            <div class="project-tags">
+                                ${(p.tags || []).map((t) => `<span class="project-tag">${esc(t)}</span>`).join('')}
+                            </div>
+                            <h3 class="project-title">${esc(p.title)}</h3>
+                            <p class="project-description">${esc(p.description)}</p>
+                        </div>
+                    </div>`;
+            }).join('');
+            refreshIcons();
+            reobserveReveal(wrap.querySelectorAll('.project-card'));
+            rebindProjectTilt();
+        }).catch(() => {});
     })();
 
     // ========================================
@@ -180,17 +370,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ========================================
     // ANIMATED COUNTERS
+    // Re-queries the DOM each run so it works even after the home stats are
+    // re-rendered from home.json.
     // ========================================
-    const stats = document.querySelectorAll('.stat-number');
     let statsAnimated = false;
-
     const heroSection = document.querySelector('.hero');
 
     function animateCounters() {
-        if (statsAnimated || !heroSection || stats.length === 0) return;
+        if (statsAnimated || !heroSection) return;
+        const stats = document.querySelectorAll('.stat-number');
+        if (stats.length === 0) return;
 
         const heroBottom = heroSection.getBoundingClientRect().bottom;
-
         if (heroBottom > window.innerHeight / 2) {
             statsAnimated = true;
             stats.forEach(stat => {
@@ -201,41 +392,36 @@ document.addEventListener('DOMContentLoaded', () => {
                 function updateCounter(currentTime) {
                     const elapsed = currentTime - start;
                     const progress = Math.min(elapsed / duration, 1);
-
-                    // Easing function (ease-out)
                     const easeOut = 1 - Math.pow(1 - progress, 3);
-                    const current = Math.floor(easeOut * target);
-
-                    stat.textContent = current;
-
+                    stat.textContent = Math.floor(easeOut * target);
                     if (progress < 1) {
                         requestAnimationFrame(updateCounter);
                     } else {
                         stat.textContent = target;
                     }
                 }
-
                 requestAnimationFrame(updateCounter);
             });
         }
     }
 
     window.addEventListener('scroll', animateCounters);
-    animateCounters(); // Check on load
+    animateCounters();
 
     // ========================================
     // SKILL BARS ANIMATION
+    // rebindSkillBars() lets the dynamic skills renderer re-arm this after
+    // it replaces the skill bars.
     // ========================================
-    const skillBars = document.querySelectorAll('.skill-progress');
     let skillsAnimated = false;
-
     const skillsSection = document.querySelector('.skills');
 
     function animateSkillBars() {
-        if (skillsAnimated || !skillsSection || skillBars.length === 0) return;
+        if (skillsAnimated || !skillsSection) return;
+        const skillBars = document.querySelectorAll('.skill-progress');
+        if (skillBars.length === 0) return;
 
         const sectionTop = skillsSection.getBoundingClientRect().top;
-
         if (sectionTop < window.innerHeight * 0.8) {
             skillsAnimated = true;
             skillBars.forEach((bar, index) => {
@@ -246,16 +432,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    window.rebindSkillBars = function () {
+        skillsAnimated = false;
+        animateSkillBars();
+    };
+
     window.addEventListener('scroll', animateSkillBars);
-    animateSkillBars(); // Check on load
+    animateSkillBars();
 
     // ========================================
     // SCROLL REVEAL ANIMATION
+    // reobserveReveal(nodes) lets dynamic renderers add their new elements to
+    // the reveal observer.
     // ========================================
-    const revealElements = document.querySelectorAll(
-        '.section-header, .about-grid, .skill-category, .project-card, .timeline-item, .contact-grid'
-    );
-
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -268,10 +457,16 @@ document.addEventListener('DOMContentLoaded', () => {
         rootMargin: '0px 0px -50px 0px'
     });
 
-    revealElements.forEach(el => {
-        el.classList.add('fade-in');
-        revealObserver.observe(el);
-    });
+    window.reobserveReveal = function (nodes) {
+        nodes.forEach(el => {
+            el.classList.add('fade-in');
+            revealObserver.observe(el);
+        });
+    };
+
+    window.reobserveReveal(document.querySelectorAll(
+        '.section-header, .about-grid, .skill-category, .project-card, .timeline-item, .contact-grid'
+    ));
 
     // ========================================
     // PARALLAX EFFECT FOR HERO ORBS
@@ -403,28 +598,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ========================================
     // PROJECT CARD TILT EFFECT
+    // bindProjectTilt() is exposed so the dynamic projects renderer can
+    // re-bind after replacing the cards.
     // ========================================
-    const projectCards = document.querySelectorAll('.project-card');
-
-    projectCards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-
-            const rotateX = (y - centerY) / 20;
-            const rotateY = (centerX - x) / 20;
-
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
+    function bindProjectTilt() {
+        document.querySelectorAll('.project-card').forEach(card => {
+            if (card.dataset.tiltBound) return; // avoid double-binding
+            card.dataset.tiltBound = '1';
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
         });
-
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = '';
-        });
-    });
+    }
+    window.rebindProjectTilt = bindProjectTilt;
+    bindProjectTilt();
 
     // ========================================
     // KEYBOARD NAVIGATION

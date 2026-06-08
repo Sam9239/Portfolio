@@ -1,0 +1,9 @@
+{
+  "title": "E-Commerce Platform",
+  "description": "A full-stack e-commerce solution with real-time inventory, payment processing, and admin dashboard.",
+  "image": "assets/project-ecommerce.webp",
+  "tags": ["React", "Node.js", "MongoDB"],
+  "liveUrl": "",
+  "codeUrl": "",
+  "order": 1
+}

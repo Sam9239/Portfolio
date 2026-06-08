@@ -1,0 +1,44 @@
+{
+  "categories": [
+    {
+      "name": "Frontend",
+      "icon": "code-2",
+      "skills": [
+        { "name": "HTML5 & CSS3", "level": 95 },
+        { "name": "JavaScript (ES6+)", "level": 90 },
+        { "name": "React / Next.js", "level": 85 },
+        { "name": "TypeScript", "level": 80 }
+      ]
+    },
+    {
+      "name": "Data & BI",
+      "icon": "database",
+      "skills": [
+        { "name": "SQL / PostgreSQL", "level": 88 },
+        { "name": "Python (Pandas)", "level": 85 },
+        { "name": "Power BI / Tableau", "level": 82 },
+        { "name": "ETL / Data Modeling", "level": 78 }
+      ]
+    },
+    {
+      "name": "Backend",
+      "icon": "server",
+      "skills": [
+        { "name": "Node.js", "level": 80 },
+        { "name": "REST APIs", "level": 85 },
+        { "name": "Databases", "level": 82 },
+        { "name": "Automation", "level": 75 }
+      ]
+    },
+    {
+      "name": "Tools",
+      "icon": "wrench",
+      "skills": [
+        { "name": "Git & GitHub", "level": 90 },
+        { "name": "Excel (Advanced)", "level": 92 },
+        { "name": "Docker", "level": 65 },
+        { "name": "Cloud (AWS / Azure)", "level": 70 }
+      ]
+    }
+  ]
+}

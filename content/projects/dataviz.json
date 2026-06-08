@@ -1,0 +1,9 @@
+{
+  "title": "Data Visualization Dashboard",
+  "description": "Interactive analytics dashboard with custom charts, data filtering, and export capabilities.",
+  "image": "assets/project-dataviz.webp",
+  "tags": ["Power BI", "D3.js", "Python"],
+  "liveUrl": "",
+  "codeUrl": "",
+  "order": 3
+}

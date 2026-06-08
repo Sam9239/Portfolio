@@ -1,0 +1,29 @@
+{
+  "stats": [
+    { "number": 5, "label": "Years Experience" },
+    { "number": 50, "label": "Projects Completed" },
+    { "number": 30, "label": "Happy Clients" }
+  ],
+  "introHeading": "I help teams make sense of their data.",
+  "introP1": "I'm Samuel — a Digital Transformation & Business Intelligence developer. I design and build the dashboards, data pipelines, and web tools that turn raw numbers into clear, confident decisions.",
+  "introP2": "From analytics platforms to clean, performant front-ends, I focus on solutions that are reliable, easy to use, and genuinely useful.",
+  "services": [
+    {
+      "icon": "bar-chart-3",
+      "title": "Business Intelligence",
+      "description": "Interactive dashboards and reports that surface the metrics that matter and keep teams aligned."
+    },
+    {
+      "icon": "database",
+      "title": "Data Engineering",
+      "description": "Clean, reliable data pipelines and models that make analytics fast, accurate, and trustworthy."
+    },
+    {
+      "icon": "code-2",
+      "title": "Web Development",
+      "description": "Modern, responsive front-ends and tools built with performance and great UX in mind."
+    }
+  ],
+  "ctaHeading": "Have a project in mind?",
+  "ctaText": "Let's talk about how data and clean engineering can move your business forward."
+}

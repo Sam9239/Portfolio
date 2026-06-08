@@ -1,0 +1,9 @@
+{
+  "title": "Real-time Chat Application",
+  "description": "Feature-rich messaging platform with end-to-end encryption, file sharing, and video calls.",
+  "image": "assets/project-chat.webp",
+  "tags": ["Socket.io", "Express", "Redis"],
+  "liveUrl": "",
+  "codeUrl": "",
+  "order": 5
+}

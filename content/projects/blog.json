@@ -1,0 +1,9 @@
+{
+  "title": "Tech Blog Platform",
+  "description": "High-performance blog with markdown support, syntax highlighting, and newsletter integration.",
+  "image": "assets/project-blog.webp",
+  "tags": ["Astro", "MDX", "Vercel"],
+  "liveUrl": "",
+  "codeUrl": "",
+  "order": 6
+}
